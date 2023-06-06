@@ -4,3 +4,4 @@ from . import requests_button
 from . import rassilka_button
 from . import priyem
 from . import order_requests
+from . import delete_button
