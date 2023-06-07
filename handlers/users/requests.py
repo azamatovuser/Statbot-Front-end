@@ -5,17 +5,6 @@ from keyboards.inline.priyem import priyem
 from keyboards.inline.detail_information_about_bot import detail_information_about_bot
 
 
-@dp.callback_query_handler(text=['1'])
-async def requests_def(call:types.CallbackQuery):
-    await call.message.answer('Вступительные заявки 📫\n\n┣ '
-                              'Принято: 0\n┣ Отклонено: 0\n┣ '
-                              'В очереди: 0\nНастройка задержки:'
-                              ' моментально\n\nМожно выключить '
-                              'автоматическое принятие  или настроить '
-                              'их фильтрацию с помощью кнопок ниже', reply_markup=requests_button)
-    await call.message.delete()
-
-
 @dp.callback_query_handler(text='avto_priem')
 async def priem(call:types.CallbackQuery):
     await call.message.answer('Автоматический приём ✅️\n\nНастройте '

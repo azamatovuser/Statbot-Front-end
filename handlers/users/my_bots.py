@@ -2,6 +2,20 @@ from aiogram import types
 from loader import dp, bot
 from keyboards.inline.list_of_my_bots import list_of_my_bots
 from keyboards.inline.detail_information_about_bot import detail_information_about_bot
+import requests
+from data.config import BASE_URL
+from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters import Command
+from aiogram.dispatcher.filters.state import State, StatesGroup
+from .start import BotTokenForm
+
+
+rs = requests.get(url=f"{BASE_URL}bot/")
+data = rs.json()
+
+list_of_bot = []
+for i in data:
+    list_of_bot.append(i['name'])
 
 
 @dp.message_handler(text=['Мои боты'])
@@ -12,10 +26,11 @@ async def bots(message:types.Message):
 @dp.callback_query_handler(text=['add_bot'])
 async def add_group(call:types.CallbackQuery):
     await call.message.answer(f"· Перейдите в @botfather;\n· Создайте нового бота;\n· Пришлите мне токен созданного бота;\n· Добавьте своего бота админом на канал;\n· Возвращайтесь — бот настроен!\n\nПример токена: 6003857882:AAHwbg9Mi1tmr_uFDn8Yd9vdOiOxHLLuuqY", reply_markup=types.ReplyKeyboardRemove())
+    await BotTokenForm.WaitingForToken.set()
     await call.message.delete()
 
 
-@dp.callback_query_handler(lambda c: True)
+@dp.callback_query_handler(lambda c: c.data in list_of_bot)
 async def process_callback_query(callback_query: types.CallbackQuery):
     # Получение данных из нажатой инлайн-кнопки
     selected_name = callback_query.data

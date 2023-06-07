@@ -1,13 +1,6 @@
 from aiogram import types
 from loader import dp
-from keyboards.inline.delete_button import delete_button
 from keyboards.inline.detail_information_about_bot import detail_information_about_bot
-
-
-@dp.callback_query_handler(text='9')
-async def delete(call:types.CallbackQuery):
-    await call.message.answer('Вы ТОЧНО хотите удалить группу?', reply_markup=delete_button)
-    await call.message.delete()
 
 
 @dp.callback_query_handler(text='back_delete')

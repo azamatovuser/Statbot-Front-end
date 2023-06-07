@@ -6,6 +6,8 @@ from aiogram.dispatcher.filters import Command
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from loader import dp, bot
 from keyboards.default.my_bots import my_bots
+import requests
+from data.config import BASE_URL
 
 bot_list = []
 
@@ -47,6 +49,10 @@ async def process_token(message: types.Message, state: FSMContext):
     is_valid, bot_name = await validate_token(user_token)
 
     if is_valid:
+        bot_info = {
+            'name': bot_name
+        }
+        rs = requests.post(url=f"{BASE_URL}bot/create/", data=bot_info)
         await message.answer(f"Бот Название успешно подключен!\n\n→ Отлично, осталось добавить бота в администраторы канала с которым будете работать - {bot_name}", reply_markup=my_bots)
         await state.finish()
     else:
