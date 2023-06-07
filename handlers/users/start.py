@@ -7,6 +7,8 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from loader import dp, bot
 from keyboards.default.my_bots import my_bots
 
+bot_list = []
+
 
 class BotTokenForm(StatesGroup):
     WaitingForToken = State()
@@ -19,6 +21,8 @@ async def validate_token(token):
     try:
         # Получаем информацию о боте
         bot_info = await small_bot.get_me()
+        bot_list.append(bot_info)
+
 
         # Возвращаем имя бота
         return True, bot_info.first_name
