@@ -6,7 +6,7 @@ one = InlineKeyboardButton('Вступительные заявки 📫', callb
 two = InlineKeyboardButton('Сообщения 💭', callback_data='2')
 three = InlineKeyboardButton('Розыгрыши 🎁', callback_data='3')
 four = InlineKeyboardButton('Рассылка 📣', callback_data='4')
-five = InlineKeyboardButton('Капча 👾', callback_data='5')
+five = InlineKeyboardButton('Капча 👾', callback_data='captcha')
 six = InlineKeyboardButton('Передать доступ 🔑', callback_data='6')
 seven = InlineKeyboardButton('Избранное', callback_data='7')
 eight = InlineKeyboardButton('Назад', callback_data='8')

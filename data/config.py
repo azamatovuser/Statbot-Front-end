@@ -1,10 +1,11 @@
 from environs import Env
+import os
+from dotenv import load_dotenv
 
-# environs kutubxonasidan foydalanish
 env = Env()
 env.read_env()
+load_dotenv()
 
-# .env fayl ichidan quyidagilarni o'qiymiz
 BOT_TOKEN = env.str("BOT_TOKEN")
 ADMINS = env.list("ADMINS")
 IP = env.str("ip")

@@ -3,9 +3,10 @@ from loader import dp, bot
 from keyboards.inline.detail_information_about_bot import detail_information_about_bot
 from keyboards.inline.list_of_my_bots import list_of_my_bots
 from keyboards import inline
+from aiogram.dispatcher import FSMContext
 
 
-@dp.callback_query_handler(lambda c: c.data in ['1', '2', '3', '4', '5', '6', '7', '8', '9'])
+@dp.callback_query_handler(lambda c: c.data in ['1', '2', '3', '4', '6', '7', '8', '9'])
 async def process_callback_query(callback_query: types.CallbackQuery):
     button_id = callback_query.data
 
@@ -36,10 +37,6 @@ async def process_callback_query(callback_query: types.CallbackQuery):
                               ' добавит ссылку на канал\n→ тэг '
                               '{today} добавит сегодняшнюю дату', reply_markup=inline.rassilka_button.rassilka_button)
         await callback_query.message.delete()
-    elif button_id == '5':
-        # Обработка нажатия кнопки "Капча 👾"
-        await bot.send_message(callback_query.from_user.id, "Вы нажали кнопку 'Капча 👾'")
-        await callback_query.message.delete()
     elif button_id == '6':
         # Обработка нажатия кнопки "Передать доступ 🔑"
         await bot.send_message(callback_query.from_user.id, "Вы нажали кнопку 'Передать доступ 🔑'")
@@ -56,3 +53,9 @@ async def process_callback_query(callback_query: types.CallbackQuery):
         # Обработка нажатия кнопки "Удалить"
         await bot.send_message(callback_query.from_user.id, 'Вы ТОЧНО хотите удалить группу?', reply_markup=inline.delete_button.delete_button)
         await callback_query.message.delete()
+
+
+@dp.callback_query_handler(text="captcha")
+async def get_captcha_setting(call: types.CallbackQuery):
+    await call.message.answer('captcha')
+    await call.message.delete()
