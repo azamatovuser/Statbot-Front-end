@@ -9,6 +9,8 @@ from aiogram.dispatcher.filters import Command
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from .start import BotTokenForm
 
+bot_id = ['1']
+
 
 rs = requests.get(url=f"{BASE_URL}bot/")
 data = rs.json()
@@ -24,17 +26,14 @@ async def bots(message:types.Message):
 
 
 @dp.callback_query_handler(text=['add_bot'])
-async def add_group(call:types.CallbackQuery):
-    await call.message.answer(f"· Перейдите в @botfather;\n· Создайте нового бота;\n· Пришлите мне токен созданного бота;\n· Добавьте своего бота админом на канал;\n· Возвращайтесь — бот настроен!\n\nПример токена: 6003857882:AAHwbg9Mi1tmr_uFDn8Yd9vdOiOxHLLuuqY", reply_markup=types.ReplyKeyboardRemove())
+async def add_group(callback_query:types.CallbackQuery):
+    await callback_query.message.answer(text=f"· Перейдите в @botfather;\n· Создайте нового бота;\n· Пришлите мне токен созданного бота;\n· Добавьте своего бота админом на канал;\n· Возвращайтесь — бот настроен!\n\nПример токена: 6003857882:AAHwbg9Mi1tmr_uFDn8Yd9vdOiOxHLLuuqY", reply_markup=types.ReplyKeyboardRemove())
     await BotTokenForm.WaitingForToken.set()
-    await call.message.delete()
+    await callback_query.message.delete()
 
 
 @dp.callback_query_handler(lambda c: c.data in list_of_bot)
 async def process_callback_query(callback_query: types.CallbackQuery):
-    # Получение данных из нажатой инлайн-кнопки
     selected_name = callback_query.data
-
-    # Отправка ответа с выбранным именем
-    await bot.send_message(callback_query.from_user.id,text=f'{selected_name}\n\nАудитория бота\n✅ Активная: 4 чел.\n🚫 Заблокировали: 0 чел.\n\nПол аудитории\n🙍 М: 74%\n🙍 Ж: 26%\n\nЯзыки аудитории\n🇮🇸 RU: 39%\n🇮🇸 EN: 39%\n🇮🇸 TR: 17.5%\n🇮🇸 Другие: 39%\n\nПодключенные каналы\n🔗 Канал1\n🔗 Канал2\n\nПоследнее обновление статистики 11 декабря 2023 года в 13:23:21', reply_markup=detail_information_about_bot)
-    await callback_query.message.delete()
+    bot_id[0] = selected_name
+    await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text=f'{selected_name}\n\nАудитория бота\n✅ Активная: 4 чел.\n🚫 Заблокировали: 0 чел.\n\nПол аудитории\n🙍 М: 74%\n🙍 Ж: 26%\n\nЯзыки аудитории\n🇮🇸 RU: 39%\n🇮🇸 EN: 39%\n🇮🇸 TR: 17.5%\n🇮🇸 Другие: 39%\n\nПодключенные каналы\n🔗 Канал1\n🔗 Канал2\n\nПоследнее обновление статистики 11 декабря 2023 года в 13:23:21', reply_markup=detail_information_about_bot)

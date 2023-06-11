@@ -5,3 +5,6 @@ from . import rassilka_button
 from . import priyem
 from . import order_requests
 from . import delete_button
+from . import captcha_button
+from . import set_captcha_button
+from . import captcha_button_off

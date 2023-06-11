@@ -6,3 +6,4 @@ from . import bot_detail
 from . import rassilka
 from . import order
 from . import delete
+from . import captcha
