@@ -6,19 +6,14 @@ from keyboards import inline
 from aiogram.dispatcher import FSMContext
 
 
-@dp.callback_query_handler(lambda c: c.data in ['1', '2', '3', '6', '7', '8'])
+requests_list = []
+
+
+
+@dp.callback_query_handler(lambda c: c.data in ['2', '3', '6', '7', '8'])
 async def process_callback_query(callback_query: types.CallbackQuery):
     button_id = callback_query.data
-
-    if button_id == '1':
-        # Обработка нажатия кнопки "Вступительные заявки 📫"
-        await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text='Вступительные заявки 📫\n\n┣ '
-                              'Принято: 0\n┣ Отклонено: 0\n┣ '
-                              'В очереди: 0\nНастройка задержки:'
-                              ' моментально\n\nМожно выключить '
-                              'автоматическое принятие  или настроить '
-                              'их фильтрацию с помощью кнопок ниже', reply_markup=inline.requests_button.requests_button)
-    elif button_id == '2':
+    if button_id == '2':
         # Обработка нажатия кнопки "Сообщения 💭"
         await bot.edit_message_text(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id, text="Вы нажали кнопку 'Сообщения 💭'")
     elif button_id == '3':

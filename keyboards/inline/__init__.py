@@ -8,3 +8,4 @@ from . import delete_button
 from . import captcha_button
 from . import set_captcha_button
 from . import captcha_button_off
+from . import priyem_on
